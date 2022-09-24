@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 // Set the NODE_ENV to 'DEVelopment' by default
-process.env.NODE_ENV = process.env.NODE_ENV || 'DEVelopment';
+process.env.NODE_ENV = process.env.NODE_ENV || "DEVelopment";
 
 const envFound = dotenv.config();
 if (envFound.error) {
@@ -25,4 +25,9 @@ export default {
   host: process.env.DEV_DB_HOST,
   database: process.env.DEV_DB_DB,
   password: process.env.DEV_DB_PASSWORD,
+
+  /**
+   * jwt_secret
+   */
+  jwtSecret: process.env.JWT_SECRET as string
 };

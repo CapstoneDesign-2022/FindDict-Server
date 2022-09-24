@@ -5,7 +5,7 @@ import message from "../modules/responseMessage";
 import db from "../loaders/db";
 import { UserCreateDto } from "../interfaces/IUser";
 import { UserService } from "../services";
-import {validationResult} from 'express-validator';
+import { validationResult } from "express-validator";
 
 /**
  *  @route POST /user/
@@ -16,12 +16,12 @@ import {validationResult} from 'express-validator';
 const createUser = async (req: Request, res: Response) => {
   let client;
   const error = validationResult(req);
-  if(!error.isEmpty()){
+  if (!error.isEmpty()) {
     return res
-            .status(statusCode.BAD_REQUEST)
-            .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+      .status(statusCode.BAD_REQUEST)
+      .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
   }
-
+  // const userId = req.body.user.id;
   try {
     client = await db.connect(req);
     const userCreateDto: UserCreateDto = req.body;

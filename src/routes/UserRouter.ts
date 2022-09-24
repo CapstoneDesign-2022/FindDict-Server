@@ -5,7 +5,7 @@ import { body } from "express-validator";
 const router = Router();
 router.post(
   "/",
-  [body("email").notEmpty(), body("nickname").notEmpty()],
+  [body("email").notEmpty(), body("age").notEmpty()],
   UserController.createUser
 );
 

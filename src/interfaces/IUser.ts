@@ -1,9 +1,11 @@
 export interface UserCreateDto {
   email: string;
-  nickname: string;
+  age: string;
+}
 }
 
 export interface UserResponseDto {
   email: string;
-  nickname: string;
+  age: string;
+  accessToken: string;
 }
