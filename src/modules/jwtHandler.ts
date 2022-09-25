@@ -19,7 +19,8 @@ const verifyToken = (token: string) => {
   let decoded;
   try {
     decoded = jwt.verify(token, config.jwtSecret);
-    console.log(decoded);
+    console.log("decoded", decoded);
+    return decoded;
   } catch (error: any) {
     console.log(error);
     if (error.message === "jwt expired") {
