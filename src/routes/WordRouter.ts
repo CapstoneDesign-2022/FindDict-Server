@@ -5,7 +5,7 @@ import auth from "../middlewares/auth";
 import imageUploader from "../config/multer";
 const router = Router();
 
-router.post("/test/image", (req, res) => {
+router.post("/test/image", imageUploader.single("image"), (req, res) => {
   res.send("goood!");
 });
 

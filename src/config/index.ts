@@ -34,6 +34,6 @@ export default {
   /**
    * AWS
    */
-  awsAccessKey: process.env.AWS_ACCESS_KEY_ID as string,
-  awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY as string
+  awsAccessKey: process.env.AWS_ACCESS_KEY_ID,
+  awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY
 };

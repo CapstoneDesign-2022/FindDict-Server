@@ -13,6 +13,7 @@ const s3: AWS.S3 = new AWS.S3({
   accessKeyId: config.awsAccessKey,
   secretAccessKey: config.awsSecretKey,
   region: "ap-northeast-2"
+  //   middlewareStack:
 });
 
 export default s3;
