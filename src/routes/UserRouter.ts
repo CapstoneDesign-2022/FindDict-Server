@@ -3,6 +3,7 @@ import { UserController } from "../controllers";
 import { body } from "express-validator";
 import auth from "../middlewares/auth";
 const router = Router();
+
 router.post(
   "/",
   [body("email").notEmpty(), body("age").notEmpty()],
@@ -10,5 +11,11 @@ router.post(
 );
 
 router.patch("/", [body("age").notEmpty()], auth, UserController.updateUser);
+
+router.get(
+  "/login",
+  [body("email").notEmpty(), body("password").notEmpty()],
+  UserController.loginUser
+);
 
 export default router;

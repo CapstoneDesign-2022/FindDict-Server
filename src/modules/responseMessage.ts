@@ -15,7 +15,11 @@ const message = {
   VALID_TOKEN: "유효한 토큰입니다",
   INVALID_TOKEN: "유효하지 않은 토큰입니다",
   NO_USER_RF_TOKEN: "유저의 리프레쉬 토큰이 아닙니다",
-  SUCCESS_REISSUE_TOKEN: "토큰 재발급 성공"
+  SUCCESS_REISSUE_TOKEN: "토큰 재발급 성공",
+
+  // 로그인 관련
+  LOGIN_SUCCESS: "유저 로그인 성공",
+  LOGIN_FAIL: "유저 로그인 실패",
 };
 
 export default message;

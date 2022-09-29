@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^17.0.25",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "@types/pg": "^8.6.5",
+    "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.3",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
