@@ -1,7 +1,7 @@
 import { access } from "fs";
 import {
-  UserCreateDto,
-  UserResponseDto,
+  UserSignUpDto,
+  UserSignUpResponseDto,
   UserSignInDto,
   UserSignInResponseDto,
 } from "../interfaces/IUser";
@@ -10,22 +10,19 @@ import bcrypt from "bcryptjs";
 
 const createUser = async (
   client: any,
-  userCreateDto: UserCreateDto
-): Promise<UserResponseDto> => {
+  userSignUpDto: UserSignUpDto
+): Promise<UserSignUpResponseDto> => {
   try {
     const { rows: user } = await client.query(
-      `
-            INSERT INTO "user" (email, age)
-            VALUES ($1, $2)
-            RETURNING id, email, age
+            `
+            INSERT INTO "user" (email, age, password)
+            VALUES ($1, $2, $3)
+            RETURNING id
             `,
-      [userCreateDto.email, userCreateDto.age]
+      [userSignUpDto.email, userSignUpDto.age, userSignUpDto.password]
     );
     const accessToken = jwtHandler.getToken(user[0].id);
-
-    const data: UserResponseDto = {
-      email: user[0].email,
-      age: user[0].age,
+    const data: UserSignUpResponseDto = {
       accessToken: accessToken,
     };
 
