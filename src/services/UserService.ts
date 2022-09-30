@@ -13,13 +13,15 @@ const createUser = async (
   userSignUpDto: UserSignUpDto
 ): Promise<UserSignUpResponseDto> => {
   try {
+    const salt = await bcrypt.genSalt(10);
+    const encryptedPassword = await bcrypt.hash(userSignUpDto.password,salt);
     const { rows: user } = await client.query(
             `
             INSERT INTO "user" (email, age, password)
             VALUES ($1, $2, $3)
             RETURNING id
             `,
-      [userSignUpDto.email, userSignUpDto.age, userSignUpDto.password]
+      [userSignUpDto.email, userSignUpDto.age, encryptedPassword]
     );
     const accessToken = jwtHandler.getToken(user[0].id);
     const data: UserSignUpResponseDto = {
