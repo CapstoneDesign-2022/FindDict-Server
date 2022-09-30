@@ -2,9 +2,12 @@ import { access } from "fs";
 import {
   UserCreateDto,
   UserResponseDto,
-  UserUpdateDto
+  UserUpdateDto,
+  UserLoginDto,
+  UserLoginResponseDto,
 } from "../interfaces/IUser";
 import jwtHandler from "../modules/jwtHandler";
+import bcrypt from "bcryptjs";
 
 const createUser = async (
   client: any,
@@ -24,7 +27,7 @@ const createUser = async (
     const data: UserResponseDto = {
       email: user[0].email,
       age: user[0].age,
-      accessToken: accessToken
+      accessToken: accessToken,
     };
 
     return data;
@@ -54,7 +57,7 @@ const updateUser = async (
 
     const data: UserResponseDto = {
       email: user[0].email,
-      age: user[0].age
+      age: user[0].age,
       // accessToken: accessToken
     };
 
@@ -65,7 +68,41 @@ const updateUser = async (
   }
 };
 
+const loginUser = async (
+  client: any,
+  userLoginDto: UserLoginDto
+): Promise<UserLoginResponseDto | string> => {
+  try {
+    const { rows: user } = await client.query(
+      `
+        SELECT *
+        FROM "user" as u
+        WHERE u.email = $1
+      `,
+      [userLoginDto.email]
+    );
+
+    const isMatch = await bcrypt.compare(
+      user[0].password,
+      userLoginDto.password
+    );
+    if (!user[0] || !isMatch) {
+      return "login failed";
+    }
+
+    const accessToken = jwtHandler.getToken(user[0].id);
+    const data: UserLoginResponseDto = {
+      accessToken: accessToken,
+    };
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export default {
   createUser,
-  updateUser
+  updateUser,
+  loginUser,
 };

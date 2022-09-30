@@ -12,3 +12,12 @@ export interface UserResponseDto {
   age: string;
   accessToken?: string;
 }
+
+export interface UserLoginDto {
+  email: string;
+  password: string;
+}
+
+export interface UserLoginResponseDto {
+  accessToken: string;
+}
