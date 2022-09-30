@@ -5,7 +5,7 @@ import message from "../modules/responseMessage";
 import db from "../loaders/db";
 import {
   UserCreateDto,
-  UserLoginDto,
+  UserSignInDto,
   UserUpdateDto,
 } from "../interfaces/IUser";
 import { UserService } from "../services";
@@ -59,8 +59,8 @@ const updateUser = async (req: Request, res: Response) => {
 
   try {
     client = await db.connect(req);
-    const userUpdateDto: UserUpdateDto = req.body;
-    console.log("req.body", req.body);
+    const userSignInDto: UserSignInDto = req.body;
+    const data = await UserService.signInUser(client, userSignInDto);
     const userId = req.body.user.id;
     const data = await UserService.updateUser(client, userUpdateDto, userId);
     res
@@ -97,11 +97,11 @@ const loginUser = async (req: Request, res: Response) => {
     if (data === "login failed") {
       res
         .status(statusCode.BAD_REQUEST)
-        .send(util.fail(statusCode.BAD_REQUEST, message.LOGIN_FAIL));
+        .send(util.fail(statusCode.BAD_REQUEST, message.SIGNIN_FAIL));
     } else {
       res
         .status(statusCode.OK)
-        .send(util.success(statusCode.OK, message.LOGIN_SUCCESS, data));
+        .send(util.success(statusCode.OK, message.SIGNIN_SUCCESS, data));
     }
   } catch (error) {
     console.log(error);
@@ -120,6 +120,6 @@ const loginUser = async (req: Request, res: Response) => {
 
 export default {
   createUser,
-  updateUser,
+  signInUser,
   loginUser,
 };

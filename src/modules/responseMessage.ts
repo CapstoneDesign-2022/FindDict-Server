@@ -18,8 +18,8 @@ const message = {
   SUCCESS_REISSUE_TOKEN: "토큰 재발급 성공",
 
   // 로그인 관련
-  LOGIN_SUCCESS: "유저 로그인 성공",
-  LOGIN_FAIL: "유저 로그인 실패",
+  SIGNIN_SUCCESS: "유저 로그인 성공",
+  SIGNIN_FAIL: "유저 로그인 실패",
 };
 
 export default message;

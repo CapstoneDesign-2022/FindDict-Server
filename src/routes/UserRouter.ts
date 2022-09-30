@@ -13,9 +13,9 @@ router.post(
 router.patch("/", [body("age").notEmpty()], auth, UserController.updateUser);
 
 router.get(
-  "/login",
+  "/signIn",
   [body("email").notEmpty(), body("password").notEmpty()],
-  UserController.loginUser
+  UserController.signInUser
 );
 
 export default router;

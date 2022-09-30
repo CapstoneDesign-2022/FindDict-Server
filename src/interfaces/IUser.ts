@@ -6,7 +6,7 @@ export interface UserCreateDto {
 export interface UserUpdateDto {
   age: string;
 }
-
+export interface UserSignInDto {
 export interface UserResponseDto {
   email: string;
   age: string;
@@ -18,6 +18,6 @@ export interface UserLoginDto {
   password: string;
 }
 
-export interface UserLoginResponseDto {
+export interface UserSignInResponseDto {
   accessToken: string;
 }
