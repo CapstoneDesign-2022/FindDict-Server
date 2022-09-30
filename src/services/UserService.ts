@@ -87,7 +87,7 @@ const loginUser = async (
       userLoginDto.password
     );
     if (!user[0] || !isMatch) {
-      return "login failed";
+      return "login_failed";
     }
 
     const accessToken = jwtHandler.getToken(user[0].id);
