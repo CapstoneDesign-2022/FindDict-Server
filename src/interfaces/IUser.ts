@@ -1,23 +1,17 @@
-export interface UserCreateDto {
+export interface UserSignUpDto {
   email: string;
   age: string;
+  password: string;
 }
 
-export interface UserUpdateDto {
-  age: string;
+export interface UserSignUpResponseDto {
+  accessToken: string;
 }
-
-export interface UserResponseDto {
-  email: string;
-  age: string;
-  accessToken?: string;
-}
-
-export interface UserLoginDto {
+export interface UserSignInDto {
   email: string;
   password: string;
 }
 
-export interface UserLoginResponseDto {
+export interface UserSignInResponseDto {
   accessToken: string;
 }
