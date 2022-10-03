@@ -29,5 +29,11 @@ export default {
   /**
    * jwt_secret
    */
-  jwtSecret: process.env.JWT_SECRET as string
+  jwtSecret: process.env.JWT_SECRET as string,
+
+  /**
+   * naver image api
+   */
+  naverClientId: process.env.NAVER_CLIENT_ID,
+  naverClientSecret: process.env.NAVER_CLIENT_SECRET
 };
