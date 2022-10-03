@@ -28,6 +28,7 @@
     "express": "^4.17.3",
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^8.8.0"
+    "pg": "^8.8.0",
+    "request": "^2.88.2"
   }
 }
