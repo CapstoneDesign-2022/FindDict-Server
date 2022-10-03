@@ -21,9 +21,8 @@ const getImage = async (word: string): Promise<string | string[]> => {
         'X-Naver-Client-Secret': client_secret,
       },
     };
-    let images: any;
     request.get(options, (error: any, response: Response, body: any) => {
-      images = JSON.parse(body);
+      const images = JSON.parse(body);
       if (!images.items) {
         return 'no_images';
       }
