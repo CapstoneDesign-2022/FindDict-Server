@@ -1,27 +1,27 @@
-import { access } from "fs";
+import { access } from 'fs';
 import {
   UserSignUpDto,
   UserSignUpResponseDto,
   UserSignInDto,
   UserSignInResponseDto,
-} from "../interfaces/IUser";
-import jwtHandler from "../modules/jwtHandler";
-import bcrypt from "bcryptjs";
+} from '../interfaces/IUser';
+import jwtHandler from '../modules/jwtHandler';
+import bcrypt from 'bcryptjs';
 
 const createUser = async (
   client: any,
-  userSignUpDto: UserSignUpDto
+  userSignUpDto: UserSignUpDto,
 ): Promise<UserSignUpResponseDto> => {
   try {
     const salt = await bcrypt.genSalt(10);
-    const encryptedPassword = await bcrypt.hash(userSignUpDto.password,salt);
+    const encryptedPassword = await bcrypt.hash(userSignUpDto.password, salt);
     const { rows: user } = await client.query(
-            `
+      `
             INSERT INTO "user" (email, age, password)
             VALUES ($1, $2, $3)
             RETURNING id
             `,
-      [userSignUpDto.email, userSignUpDto.age, encryptedPassword]
+      [userSignUpDto.email, userSignUpDto.age, encryptedPassword],
     );
     const accessToken = jwtHandler.getToken(user[0].id);
     const data: UserSignUpResponseDto = {
@@ -37,7 +37,7 @@ const createUser = async (
 
 const signInUser = async (
   client: any,
-  userSignInDto: UserSignInDto
+  userSignInDto: UserSignInDto,
 ): Promise<UserSignInResponseDto | string> => {
   try {
     const { rows: user } = await client.query(
@@ -46,15 +46,12 @@ const signInUser = async (
         FROM "user" as u
         WHERE u.email = $1
       `,
-      [userSignInDto.email]
+      [userSignInDto.email],
     );
 
-    const isMatch = await bcrypt.compare(
-      user[0].password,
-      userSignInDto.password
-    );
+    const isMatch = await bcrypt.compare(userSignInDto.password, user[0].password);
     if (!user[0] || !isMatch) {
-      return "login_failed";
+      return 'login_failed';
     }
 
     const accessToken = jwtHandler.getToken(user[0].id);

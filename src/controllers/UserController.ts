@@ -60,10 +60,10 @@ const signInUser = async (req: Request, res: Response) => {
     client = await db.connect(req);
     const userSignInDto: UserSignInDto = req.body;
     const data = await UserService.signInUser(client, userSignInDto);
-    if (data === "login failed") {
+    if (data === "login_failed") {
       res
-        .status(statusCode.BAD_REQUEST)
-        .send(util.fail(statusCode.BAD_REQUEST, message.SIGNIN_FAIL));
+        .status(statusCode.UNAUTHORIZED)
+        .send(util.fail(statusCode.UNAUTHORIZED, message.SIGNIN_FAIL));
     } else {
       res
         .status(statusCode.OK)
