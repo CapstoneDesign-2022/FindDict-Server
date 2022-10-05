@@ -4,6 +4,7 @@ import {
   UserSignUpResponseDto,
   UserSignInDto,
   UserSignInResponseDto,
+  UserConfirmIdDto,
 } from '../interfaces/IUser';
 import jwtHandler from '../modules/jwtHandler';
 import bcrypt from 'bcryptjs';
@@ -65,7 +66,31 @@ const signInUser = async (
   }
 };
 
+const confirmUserId = async (client: any, userConfirmIdDto: UserConfirmIdDto): Promise<string> => {
+  try {
+    const { rows: user } = await client.query(
+      `
+        SELECT *
+        FROM "user" as u
+        WHERE u.email = $1
+      `,
+      [userConfirmIdDto.email],
+    );
+
+    console.log('user: ', user);
+    if (user[0]) {
+      return 'already_exist';
+    } else {
+      return 'available_Id';
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export default {
   createUser,
   signInUser,
+  confirmUserId,
 };

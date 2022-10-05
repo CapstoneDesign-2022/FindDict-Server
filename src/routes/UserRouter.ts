@@ -20,4 +20,10 @@ router.get(
   UserController.signInUser
 );
 
+router.get(
+  "/confirmId",
+  [body("email").notEmpty()],
+  UserController.confirmUserId
+)
+
 export default router;

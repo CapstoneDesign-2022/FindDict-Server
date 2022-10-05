@@ -3,7 +3,6 @@ export interface UserSignUpDto {
   age: string;
   password: string;
 }
-
 export interface UserSignUpResponseDto {
   accessToken: string;
 }
@@ -11,7 +10,9 @@ export interface UserSignInDto {
   email: string;
   password: string;
 }
-
 export interface UserSignInResponseDto {
   accessToken: string;
+}
+export interface UserConfirmIdDto {
+  email: string;
 }
