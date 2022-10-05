@@ -1,5 +1,5 @@
 export interface UserSignUpDto {
-  email: string;
+  user_id: string;
   age: string;
   password: string;
 }
@@ -7,12 +7,12 @@ export interface UserSignUpResponseDto {
   accessToken: string;
 }
 export interface UserSignInDto {
-  email: string;
+  user_id: string;
   password: string;
 }
 export interface UserSignInResponseDto {
   accessToken: string;
 }
 export interface UserConfirmIdDto {
-  email: string;
+  user_id: string;
 }

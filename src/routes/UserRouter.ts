@@ -7,22 +7,22 @@ const router = Router();
 router.post(
   "/signUp",
   [
-    body("email").notEmpty(),
+    body("user_id").notEmpty(),
     body("age").notEmpty(),
     body("password").notEmpty()
   ],
-  UserController.createUser
+  UserController.signUpUser
 );
 
 router.get(
   "/signIn",
-  [body("email").notEmpty(), body("password").notEmpty()],
+  [body("user_id").notEmpty(), body("password").notEmpty()],
   UserController.signInUser
 );
 
 router.get(
   "/confirmId",
-  [body("email").notEmpty()],
+  [body("user_id").notEmpty()],
   UserController.confirmUserId
 )
 

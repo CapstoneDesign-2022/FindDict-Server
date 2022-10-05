@@ -13,7 +13,7 @@ import { validationResult } from 'express-validator';
  *  @access public
  **/
 
-const createUser = async (req: Request, res: Response) => {
+const signUpUser = async (req: Request, res: Response) => {
   let client;
   const error = validationResult(req);
   if (!error.isEmpty()) {
@@ -25,7 +25,7 @@ const createUser = async (req: Request, res: Response) => {
   try {
     client = await db.connect(req);
     const userSignUpDto: UserSignUpDto = req.body;
-    const data = await UserService.createUser(client, userSignUpDto);
+    const data = await UserService.signUpUser(client, userSignUpDto);
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.CREATE_USER_SUCCESS, data));
   } catch (error) {
     console.log(error);
@@ -100,7 +100,7 @@ const confirmUserId = async (req: Request, res: Response) => {
 }
 
 export default {
-  createUser,
+  signUpUser,
   signInUser,
   confirmUserId
 };
