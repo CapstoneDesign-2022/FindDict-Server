@@ -21,7 +21,6 @@ const createWords = async (req: Request, res: Response) => {
       .status(statusCode.BAD_REQUEST)
       .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
   }
-//   console.log(req.body.user_id, req.body.words,req.file)
   if (!req.file) {
     return res
       .status(statusCode.BAD_REQUEST)
@@ -32,13 +31,9 @@ const createWords = async (req: Request, res: Response) => {
   try {
     client = await db.connect(req);
     const wordCreateDto: WordCreateDto = req.body;
-    console.log("req.body",req.body)
-    const json = JSON.parse(req.body.words);
-    console.log(json);
-    wordCreateDto.words = json;
-    // console.log(req.body.user.id)
-    const user_id = req.body.user.id
-    const data = await WordService.createWords(client, user_id, location, wordCreateDto);
+    wordCreateDto.words = JSON.parse(req.body.words);
+    const userId = req.body.user.id
+    const data = await WordService.createWords(client, userId, location, wordCreateDto);
     res
       .status(statusCode.OK)
       .send(util.success(statusCode.OK, message.CREATE_WORD_SUCCESS, data));
