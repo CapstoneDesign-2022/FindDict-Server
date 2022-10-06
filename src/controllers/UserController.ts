@@ -3,7 +3,10 @@ import util from "../modules/util";
 import { Request, Response } from "express";
 import message from "../modules/responseMessage";
 import db from "../loaders/db";
-import { UserCreateDto, UserUpdateDto } from "../interfaces/IUser";
+import {
+  UserSignUpDto,
+  UserSignInDto,
+} from "../interfaces/IUser";
 import { UserService } from "../services";
 import { validationResult } from "express-validator";
 
@@ -21,11 +24,11 @@ const createUser = async (req: Request, res: Response) => {
       .status(statusCode.BAD_REQUEST)
       .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
   }
-  // const userId = req.body.user.id;
+
   try {
     client = await db.connect(req);
-    const userCreateDto: UserCreateDto = req.body;
-    const data = await UserService.createUser(client, userCreateDto);
+    const userSignUpDto: UserSignUpDto = req.body;
+    const data = await UserService.createUser(client, userSignUpDto);
     res
       .status(statusCode.OK)
       .send(util.success(statusCode.OK, message.CREATE_USER_SUCCESS, data));
@@ -44,7 +47,7 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const updateUser = async (req: Request, res: Response) => {
+const signInUser = async (req: Request, res: Response) => {
   let client;
   const error = validationResult(req);
   if (!error.isEmpty()) {
@@ -52,16 +55,20 @@ const updateUser = async (req: Request, res: Response) => {
       .status(statusCode.BAD_REQUEST)
       .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
   }
-  // const userId = req.body.user.id;
+
   try {
     client = await db.connect(req);
-    const userUpdateDto: UserUpdateDto = req.body;
-    console.log("req.body", req.body);
-    const userId = req.body.user.id;
-    const data = await UserService.updateUser(client, userUpdateDto, userId);
-    res
-      .status(statusCode.OK)
-      .send(util.success(statusCode.OK, message.UPDATE_USER_SUCCESS, data));
+    const userSignInDto: UserSignInDto = req.body;
+    const data = await UserService.signInUser(client, userSignInDto);
+    if (data === "login_failed") {
+      res
+        .status(statusCode.UNAUTHORIZED)
+        .send(util.fail(statusCode.UNAUTHORIZED, message.SIGNIN_FAIL));
+    } else {
+      res
+        .status(statusCode.OK)
+        .send(util.success(statusCode.OK, message.SIGNIN_SUCCESS, data));
+    }
   } catch (error) {
     console.log(error);
     res
@@ -79,5 +86,5 @@ const updateUser = async (req: Request, res: Response) => {
 
 export default {
   createUser,
-  updateUser
+  signInUser,
 };
