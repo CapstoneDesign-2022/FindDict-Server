@@ -7,6 +7,8 @@ const message = {
   // 유저 관련
   CREATE_USER_SUCCESS: "유저 생성 성공",
   UPDATE_USER_SUCCESS: "유저 업데이트 성공",
+  AVAILABLE_USER_ID: "아이디 사용 가능",
+  ID_ALREADY_EXISTS: "아이디 중복",
 
   // 토큰 관련
   NULL_VALUE_TOKEN: "토큰이 없습니다",
