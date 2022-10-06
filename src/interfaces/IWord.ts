@@ -1,4 +1,15 @@
 export interface WordCreateDto {
-  korean: string;
-  english: string;
-}
+
+// words: {korean: string}:string,
+
+
+  words : [
+    {
+      korean: string;
+      english: string;
+    },
+  ];
+};
+
+
+

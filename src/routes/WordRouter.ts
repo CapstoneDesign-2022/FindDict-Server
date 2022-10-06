@@ -1,12 +1,16 @@
 import { Router } from "express";
-import { UserController } from "../controllers";
+import { WordController } from "../controllers";
 import { body } from "express-validator";
 import auth from "../middlewares/auth";
 import imageUploader from "../config/multer";
 const router = Router();
 
-router.post("/test/image", imageUploader.single("image"), (req, res) => {
-  res.send("goood!");
-});
+router.post(
+  "/new", 
+  imageUploader.single("image"), 
+  [body("words").notEmpty()], 
+  auth,
+  WordController.createWords
+);
 
 export default router;

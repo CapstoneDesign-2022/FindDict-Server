@@ -1,4 +1,4 @@
 import UserService from "./UserService";
-
+import WordService from "./WordService";
 //service index file
-export { UserService };
+export { UserService , WordService};
