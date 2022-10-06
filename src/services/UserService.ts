@@ -4,11 +4,12 @@ import {
   UserSignUpResponseDto,
   UserSignInDto,
   UserSignInResponseDto,
+  UserConfirmIdDto,
 } from '../interfaces/IUser';
 import jwtHandler from '../modules/jwtHandler';
 import bcrypt from 'bcryptjs';
 
-const createUser = async (
+const signUpUser = async (
   client: any,
   userSignUpDto: UserSignUpDto,
 ): Promise<UserSignUpResponseDto> => {
@@ -17,11 +18,11 @@ const createUser = async (
     const encryptedPassword = await bcrypt.hash(userSignUpDto.password, salt);
     const { rows: user } = await client.query(
       `
-            INSERT INTO "user" (email, age, password)
+            INSERT INTO "user" (user_id, age, password)
             VALUES ($1, $2, $3)
             RETURNING id
             `,
-      [userSignUpDto.email, userSignUpDto.age, encryptedPassword],
+      [userSignUpDto.user_id, userSignUpDto.age, encryptedPassword],
     );
     const accessToken = jwtHandler.getToken(user[0].id);
     const data: UserSignUpResponseDto = {
@@ -44,9 +45,9 @@ const signInUser = async (
       `
         SELECT *
         FROM "user" as u
-        WHERE u.email = $1
+        WHERE u.user_id = $1
       `,
-      [userSignInDto.email],
+      [userSignInDto.user_id],
     );
 
     const isMatch = await bcrypt.compare(userSignInDto.password, user[0].password);
@@ -65,7 +66,31 @@ const signInUser = async (
   }
 };
 
+const confirmUserId = async (client: any, userConfirmIdDto: UserConfirmIdDto): Promise<string> => {
+  try {
+    const { rows: user } = await client.query(
+      `
+        SELECT *
+        FROM "user" as u
+        WHERE u.user_id = $1
+      `,
+      [userConfirmIdDto.user_id],
+    );
+
+    console.log('user: ', user);
+    if (user[0]) {
+      return 'already_exist';
+    } else {
+      return 'available_Id';
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export default {
-  createUser,
+  signUpUser,
   signInUser,
+  confirmUserId,
 };
