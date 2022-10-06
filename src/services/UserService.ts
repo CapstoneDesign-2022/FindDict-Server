@@ -77,7 +77,6 @@ const confirmUserId = async (client: any, userConfirmIdDto: UserConfirmIdDto): P
       [userConfirmIdDto.user_id],
     );
 
-    console.log('user: ', user);
     if (user[0]) {
       return 'already_exist';
     } else {
