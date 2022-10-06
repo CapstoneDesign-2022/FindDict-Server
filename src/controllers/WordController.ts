@@ -41,7 +41,7 @@ const createWords = async (req: Request, res: Response) => {
     const data = await WordService.createWords(client, user_id, location, wordCreateDto);
     res
       .status(statusCode.OK)
-      .send(util.success(statusCode.OK, message.CREATE_USER_SUCCESS, data));
+      .send(util.success(statusCode.OK, message.CREATE_WORD_SUCCESS, data));
   } catch (error) {
     console.log(error);
     res

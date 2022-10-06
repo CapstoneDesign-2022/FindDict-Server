@@ -24,8 +24,8 @@ const message = {
   SIGNIN_FAIL: "유저 로그인 실패",
 
   // 단어 관련
-  // CREATE_WORD_SUCCESS: "단어 추가 성공",
-  // CREATE_WORD_FAIL: "단어 추가 실패"
+  CREATE_WORD_SUCCESS: "단어 추가 성공",
+  CREATE_WORD_FAIL: "단어 추가 실패"
 };
 
 export default message;
