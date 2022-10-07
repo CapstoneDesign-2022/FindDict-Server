@@ -29,5 +29,11 @@ export default {
   /**
    * jwt_secret
    */
-  jwtSecret: process.env.JWT_SECRET as string
+  jwtSecret: process.env.JWT_SECRET as string,
+
+  /**
+   * AWS
+   */
+  awsAccessKey: process.env.AWS_ACCESS_KEY_ID,
+  awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY
 };
