@@ -9,3 +9,12 @@ export interface WordCreateDto {
     },
   ];
 }
+
+export interface WordResponseDto {
+  words: [
+    {
+      korean: string;
+      english: string;
+    },
+  ];
+}

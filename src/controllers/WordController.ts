@@ -53,6 +53,36 @@ const createWords = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ *  @route GET /word/
+ *  @desc get words
+ *  @access private
+ **/
+
+const getWords = async (req: Request, res: Response) => {
+  let client;
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res
+      .status(statusCode.BAD_REQUEST)
+      .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+  }
+  try {
+    client = await db.connect(req);
+    const userId = req.body.user.id;
+    console.log(userId)
+    const data = await WordService.getWords(client, userId);
+    res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_WORD_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  } finally {
+    if (client !== undefined) client.release();
+  }
+};
 export default {
   createWords,
+  getWords,
 };
