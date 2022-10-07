@@ -8,6 +8,7 @@ const createWords = async (
 ): Promise<string> => {
   try {
     for (const word of wordCreateDto.words) {
+      if(!word.korean || !word.english) return 'word_missing';
       await client.query(
         `
           INSERT INTO "word" (user_id, korean, english, image_url, is_trap)
