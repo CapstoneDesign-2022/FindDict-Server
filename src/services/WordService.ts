@@ -26,7 +26,6 @@ const createWords = async (
 
 const getWords = async (client: any, userId: string): Promise<WordResponseDto> => {
   try {
-    // console.log("getWords")
     const { rows: words } = await client.query(
       `
         SELECT w.korean, w.english
@@ -36,11 +35,11 @@ const getWords = async (client: any, userId: string): Promise<WordResponseDto> =
           `,
       [userId, false],
     );
-// console.log(words)
+
     const data: WordResponseDto = {
       words: words,
     };
-    console.log(words)
+
     return data;
   } catch (error) {
     console.log(error);

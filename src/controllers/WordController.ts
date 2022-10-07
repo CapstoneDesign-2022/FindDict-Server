@@ -70,7 +70,6 @@ const getWords = async (req: Request, res: Response) => {
   try {
     client = await db.connect(req);
     const userId = req.body.user.id;
-    console.log(userId)
     const data = await WordService.getWords(client, userId);
     res.status(statusCode.OK).send(util.success(statusCode.OK, message.GET_WORD_SUCCESS, data));
   } catch (error) {
