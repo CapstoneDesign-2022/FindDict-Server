@@ -13,4 +13,10 @@ router.post(
   WordController.createWords
 );
 
+router.get(
+  "/list", 
+  auth,
+  WordController.getWords
+);
+
 export default router;
