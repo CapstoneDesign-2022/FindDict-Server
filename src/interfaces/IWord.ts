@@ -1,6 +1,3 @@
-import { integer } from 'aws-sdk/clients/cloudfront';
-import { IntegerList } from 'aws-sdk/clients/dms';
-
 export interface WordCreateDto {
   words: [
     {
@@ -15,6 +12,14 @@ export interface WordResponseDto {
     {
       korean: string;
       english: string;
+    },
+  ];
+}
+
+export interface WordDetailResponseDto {
+  urls: [
+    {
+      url: string;
     },
   ];
 }
