@@ -28,8 +28,8 @@ phases:
       # name: version
     commands:
       # - npm install
-      - npm install -g yarn
-      - yarn install
+      - npm install 
+      # - yarn install
       # - command
   pre_build:
     commands:
@@ -37,7 +37,7 @@ phases:
       # - command
   build:
     commands:
-      - yarn run build
+      - npm run build
       # - command
   #post_build:
     #commands:
