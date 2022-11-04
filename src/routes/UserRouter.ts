@@ -5,17 +5,25 @@ import auth from "../middlewares/auth";
 const router = Router();
 
 router.post(
-  "/",
-  [body("email").notEmpty(), body("age").notEmpty()],
-  UserController.createUser
+  "/signUp",
+  [
+    body("user_id").notEmpty(),
+    body("age").notEmpty(),
+    body("password").notEmpty()
+  ],
+  UserController.signUpUser
 );
-
-router.patch("/", [body("age").notEmpty()], auth, UserController.updateUser);
 
 router.get(
-  "/login",
-  [body("email").notEmpty(), body("password").notEmpty()],
-  UserController.loginUser
+  "/signIn",
+  [body("user_id").notEmpty(), body("password").notEmpty()],
+  UserController.signInUser
 );
+
+router.get(
+  "/confirmId",
+  [body("user_id").notEmpty()],
+  UserController.confirmUserId
+)
 
 export default router;

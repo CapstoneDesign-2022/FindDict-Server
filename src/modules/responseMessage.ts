@@ -7,6 +7,8 @@ const message = {
   // 유저 관련
   CREATE_USER_SUCCESS: "유저 생성 성공",
   UPDATE_USER_SUCCESS: "유저 업데이트 성공",
+  AVAILABLE_USER_ID: "아이디 사용 가능",
+  ID_ALREADY_EXISTS: "아이디 중복",
 
   // 토큰 관련
   NULL_VALUE_TOKEN: "토큰이 없습니다",
@@ -18,8 +20,13 @@ const message = {
   SUCCESS_REISSUE_TOKEN: "토큰 재발급 성공",
 
   // 로그인 관련
-  LOGIN_SUCCESS: "유저 로그인 성공",
-  LOGIN_FAIL: "유저 로그인 실패",
+  SIGNIN_SUCCESS: "유저 로그인 성공",
+  SIGNIN_FAIL: "유저 로그인 실패",
+
+  // 단어 관련
+  CREATE_WORD_SUCCESS: "단어 추가 성공",
+  CREATE_WORD_FAIL: "단어 추가 실패",
+  GET_WORD_SUCCESS: "단어 리스트 가져오기 성공",
 };
 
 export default message;

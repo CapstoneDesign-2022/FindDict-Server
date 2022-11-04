@@ -1,32 +1,31 @@
-import { access } from "fs";
+import { access } from 'fs';
 import {
-  UserCreateDto,
-  UserResponseDto,
-  UserUpdateDto,
-  UserLoginDto,
-  UserLoginResponseDto,
-} from "../interfaces/IUser";
-import jwtHandler from "../modules/jwtHandler";
-import bcrypt from "bcryptjs";
+  UserSignUpDto,
+  UserSignUpResponseDto,
+  UserSignInDto,
+  UserSignInResponseDto,
+  UserConfirmIdDto,
+} from '../interfaces/IUser';
+import jwtHandler from '../modules/jwtHandler';
+import bcrypt from 'bcryptjs';
 
-const createUser = async (
+const signUpUser = async (
   client: any,
-  userCreateDto: UserCreateDto
-): Promise<UserResponseDto> => {
+  userSignUpDto: UserSignUpDto,
+): Promise<UserSignUpResponseDto> => {
   try {
+    const salt = await bcrypt.genSalt(10);
+    const encryptedPassword = await bcrypt.hash(userSignUpDto.password, salt);
     const { rows: user } = await client.query(
       `
-            INSERT INTO "user" (email, age)
-            VALUES ($1, $2)
-            RETURNING id, email, age
+            INSERT INTO "user" (user_id, age, password)
+            VALUES ($1, $2, $3)
+            RETURNING id
             `,
-      [userCreateDto.email, userCreateDto.age]
+      [userSignUpDto.user_id, userSignUpDto.age, encryptedPassword],
     );
     const accessToken = jwtHandler.getToken(user[0].id);
-
-    const data: UserResponseDto = {
-      email: user[0].email,
-      age: user[0].age,
+    const data: UserSignUpResponseDto = {
       accessToken: accessToken,
     };
 
@@ -37,64 +36,52 @@ const createUser = async (
   }
 };
 
-const updateUser = async (
+const signInUser = async (
   client: any,
-  userUpdateDto: UserUpdateDto,
-  userId: number
-): Promise<UserResponseDto> => {
-  try {
-    console.log(userUpdateDto, userId);
-    const { rows: user } = await client.query(
-      `
-            UPDATE "user" 
-            SET age = $1
-            WHERE id = $2
-            RETURNING *
-            `,
-      [userUpdateDto.age, userId]
-    );
-    // const accessToken = jwtHandler.getToken(user[0].id);
-
-    const data: UserResponseDto = {
-      email: user[0].email,
-      age: user[0].age,
-      // accessToken: accessToken
-    };
-
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-const loginUser = async (
-  client: any,
-  userLoginDto: UserLoginDto
-): Promise<UserLoginResponseDto | string> => {
+  userSignInDto: UserSignInDto,
+): Promise<UserSignInResponseDto | string> => {
   try {
     const { rows: user } = await client.query(
       `
         SELECT *
         FROM "user" as u
-        WHERE u.email = $1
+        WHERE u.user_id = $1
       `,
-      [userLoginDto.email]
+      [userSignInDto.user_id],
     );
 
-    const isMatch = await bcrypt.compare(
-      user[0].password,
-      userLoginDto.password
-    );
+    const isMatch = await bcrypt.compare(userSignInDto.password, user[0].password);
     if (!user[0] || !isMatch) {
-      return "login_failed";
+      return 'login_failed';
     }
 
     const accessToken = jwtHandler.getToken(user[0].id);
-    const data: UserLoginResponseDto = {
+    const data: UserSignInResponseDto = {
       accessToken: accessToken,
     };
     return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const confirmUserId = async (client: any, userConfirmIdDto: UserConfirmIdDto): Promise<string> => {
+  try {
+    const { rows: user } = await client.query(
+      `
+        SELECT *
+        FROM "user" as u
+        WHERE u.user_id = $1
+      `,
+      [userConfirmIdDto.user_id],
+    );
+
+    if (user[0]) {
+      return 'already_exist';
+    } else {
+      return 'available_Id';
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -102,7 +89,7 @@ const loginUser = async (
 };
 
 export default {
-  createUser,
-  updateUser,
-  loginUser,
+  signUpUser,
+  signInUser,
+  confirmUserId,
 };

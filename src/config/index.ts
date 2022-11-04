@@ -3,12 +3,12 @@ import dotenv from "dotenv";
 // Set the NODE_ENV to 'DEVelopment' by default
 process.env.NODE_ENV = process.env.NODE_ENV || "DEVelopment";
 
-const envFound = dotenv.config();
-if (envFound.error) {
-  // This error should crash whole process
+// const envFound = dotenv.config();
+// if (envFound.error) {
+//   // This error should crash whole process
 
-  throw new Error("⚠️  Couldn't find .env file  ⚠️");
-}
+//   throw new Error("⚠️  Couldn't find .env file  ⚠️");
+// }
 
 export default {
   /**
@@ -31,6 +31,11 @@ export default {
    */
   jwtSecret: process.env.JWT_SECRET as string,
 
+  /**
+   * AWS
+   */
+  awsAccessKey: process.env.AWS_ACCESS_KEY_ID,
+  awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY
   /**
    * naver image api
    */
