@@ -19,4 +19,6 @@ router.get(
   WordController.getWords
 );
 
+router.get("/", WordController.getImage)
+
 export default router;

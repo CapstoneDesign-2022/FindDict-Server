@@ -27,6 +27,8 @@ const message = {
   CREATE_WORD_SUCCESS: "단어 추가 성공",
   CREATE_WORD_FAIL: "단어 추가 실패",
   GET_WORD_SUCCESS: "단어 리스트 가져오기 성공",
+  GET_HINT_IMAGES_SUCCESS: "단어 힌트 이미지 가져오기 성공",
+  GET_HINT_IMAGES_FAIL: "단어 힌트 이미지 가져오기 실패"
 };
 
 export default message;
