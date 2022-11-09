@@ -37,6 +37,12 @@ const signUpUser = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ *  @route POST /user/
+ *  @desc sign in user
+ *  @access public
+ **/
+
 const signInUser = async (req: Request, res: Response) => {
   let client;
   const error = validationResult(req);

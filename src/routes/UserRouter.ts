@@ -14,9 +14,12 @@ router.post(
   UserController.signUpUser
 );
 
-router.get(
+router.post(
   "/signIn",
-  [body("user_id").notEmpty(), body("password").notEmpty()],
+  [
+    body("user_id").notEmpty(), 
+    body("password").notEmpty()
+  ],
   UserController.signInUser
 );
 
