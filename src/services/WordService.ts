@@ -1,4 +1,4 @@
-import { WordCreateDto, WordResponseDto } from '../interfaces/IWord';
+import { WordCreateDto, WordResponseDto, WordDetailResponseDto } from '../interfaces/IWord';
 
 const createWords = async (
   client: any,
@@ -47,7 +47,39 @@ const getWords = async (client: any, userId: string): Promise<WordResponseDto> =
   }
 };
 
+const getWordDetails = async (
+  client: any,
+  userId: string,
+  word: string,
+): Promise<WordDetailResponseDto | string> => {
+  try {
+    const { rows: urls } = await client.query(
+      `
+        SELECT w.image_url
+        FROM "word" as w
+        WHERE w.user_id = $1 and w.english = $2
+        ORDER BY w.created_at DESC
+      `,
+      [userId, word],
+    );
+
+    if (!urls[0]) {
+      return 'word_not_stored';
+    }
+
+    const data: WordDetailResponseDto = {
+      urls: urls,
+    };
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export default {
   createWords,
-  getWords
+  getWords,
+  getWordDetails,
 };

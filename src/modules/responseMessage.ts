@@ -27,6 +27,8 @@ const message = {
   CREATE_WORD_SUCCESS: "단어 추가 성공",
   CREATE_WORD_FAIL: "단어 추가 실패",
   GET_WORD_SUCCESS: "단어 리스트 가져오기 성공",
+  GET_WORD_DETAIL_SUCCESS: "단어 상세 리스트 가져오기 성공",
+  WORD_NOT_FOUND: "해당 단어를 찾을 수 없음"
 };
 
 export default message;
