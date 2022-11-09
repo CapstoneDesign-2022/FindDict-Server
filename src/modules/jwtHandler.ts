@@ -9,7 +9,7 @@ const getToken = (userId: number): string => {
     }
   };
   const accessToken: string = jwt.sign(payload, config.jwtSecret, {
-    expiresIn: "2h"
+    expiresIn: "14d"
   });
 
   return accessToken;
