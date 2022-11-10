@@ -1,4 +1,9 @@
-import { WordCreateDto, WordResponseDto, WordDetailResponseDto } from '../interfaces/IWord';
+import {
+  WordCreateDto,
+  WordResponseDto,
+  WordDetailResponseDto,
+  HintResponseDto,
+} from '../interfaces/IWord';
 const request = require('request');
 import config from '../config';
 
@@ -78,11 +83,9 @@ const getWordDetails = async (
     console.log(error);
     throw error;
   }
-
-  
 };
 
-const getImage = async (word: string): Promise<string | string[]> => {
+const getImage = async (word: string): Promise<string | HintResponseDto> => {
   try {
     const client_id = config.naverClientId;
     const client_secret = config.naverClientSecret;
@@ -112,7 +115,11 @@ const getImage = async (word: string): Promise<string | string[]> => {
           const data = images.items.map((image: any) => {
             return image.link;
           });
-          resolve(data);
+          resolve(
+            {
+              images: data
+            }
+              );
         }
       });
     });
@@ -126,5 +133,5 @@ export default {
   createWords,
   getWords,
   getWordDetails,
-  getImage
+  getImage,
 };
