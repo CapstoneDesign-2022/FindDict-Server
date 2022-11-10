@@ -35,5 +35,10 @@ export default {
    * AWS
    */
   awsAccessKey: process.env.AWS_ACCESS_KEY_ID,
-  awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY
+  awsSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
+  /**
+   * naver image api
+   */
+  naverClientId: process.env.NAVER_CLIENT_ID,
+  naverClientSecret: process.env.NAVER_CLIENT_SECRET
 };

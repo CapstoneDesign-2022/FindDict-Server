@@ -17,4 +17,6 @@ router.get('/list', auth, WordController.getWords);
 
 router.get('/detail', auth, WordController.getWordDetails);
 
+router.get("/", WordController.getImage)
+
 export default router;

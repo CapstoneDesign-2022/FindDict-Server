@@ -1,4 +1,6 @@
 import { WordCreateDto, WordResponseDto, WordDetailResponseDto } from '../interfaces/IWord';
+const request = require('request');
+import config from '../config';
 
 const createWords = async (
   client: any,
