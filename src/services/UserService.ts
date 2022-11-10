@@ -50,8 +50,12 @@ const signInUser = async (
       [userSignInDto.user_id],
     );
 
+    if (!user[0]) {
+      return 'login_failed';
+    }
+
     const isMatch = await bcrypt.compare(userSignInDto.password, user[0].password);
-    if (!user[0] || !isMatch) {
+    if (!isMatch) {
       return 'login_failed';
     }
 
