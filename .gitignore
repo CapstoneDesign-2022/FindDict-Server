@@ -103,7 +103,7 @@ out
 
 # vuepress build output
 .vuepress/dist
-
+.dist
 # vuepress v2.x temp and cache directory
 .temp
 
@@ -165,6 +165,8 @@ out
 
 # Ignore code-workspaces
 *.code-workspace
+
+dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode
 

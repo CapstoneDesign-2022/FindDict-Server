@@ -82,6 +82,34 @@ const getWords = async (req: Request, res: Response) => {
   }
 };
 
+const getWordDetails = async (req: Request, res: Response) => {
+  let client;
+
+  try {
+    client = await db.connect(req);
+    const userId = req.body.user.id;
+    const word: string = JSON.stringify(req.query.word).replace(/\"/gi, '');
+    const data = await WordService.getWordDetails(client, userId, word);
+    if (data === 'word_not_stored') {
+      res
+        .status(statusCode.NOT_FOUND)
+        .send(util.fail(statusCode.NOT_FOUND, message.WORD_NOT_FOUND));
+    } else {
+      res
+        .status(statusCode.OK)
+        .send(util.success(statusCode.OK, message.GET_WORD_DETAIL_SUCCESS, data));
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+  } finally {
+    if (client !== undefined) client.release();
+  }
+};
+
+
 /**
  *  @route GET /image/?search=
  *  @desc get search image
@@ -112,5 +140,6 @@ const getWords = async (req: Request, res: Response) => {
 export default {
   createWords,
   getWords,
+  getWordDetails,
   getImage
 };

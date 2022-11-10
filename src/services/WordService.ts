@@ -1,4 +1,4 @@
-import { WordCreateDto, WordResponseDto } from '../interfaces/IWord';
+import { WordCreateDto, WordResponseDto, WordDetailResponseDto } from '../interfaces/IWord';
 const request = require('request');
 import config from '../config';
 
@@ -49,40 +49,31 @@ const getWords = async (client: any, userId: string): Promise<WordResponseDto> =
   }
 };
 
-const getImage = async (word: string): Promise<string | string[]> => {
+const getWordDetails = async (
+  client: any,
+  userId: string,
+  word: string,
+): Promise<WordDetailResponseDto | string> => {
   try {
-    const client_id = config.naverClientId;
-    const client_secret = config.naverClientSecret;
-    const option = {
-      query: word,
-      start: 1,
-      display: 4,
-      sort: 'sim',
-      filter: 'small',
+    const { rows: urls } = await client.query(
+      `
+        SELECT w.image_url
+        FROM "word" as w
+        WHERE w.user_id = $1 and w.english = $2
+        ORDER BY w.created_at DESC
+      `,
+      [userId, word],
+    );
+
+    if (!urls[0]) {
+      return 'word_not_stored';
+    }
+
+    const data: WordDetailResponseDto = {
+      urls: urls,
     };
 
-    const options = {
-      uri: 'https://openapi.naver.com/v1/search/image',
-      qs: option,
-      headers: {
-        'X-Naver-Client-Id': client_id,
-        'X-Naver-Client-Secret': client_secret,
-      },
-    };
-    return new Promise((resolve, reject) => {
-      request.get(options, (error: any, response: Response, body: any) => {
-        if (error) reject(error);
-        const images = JSON.parse(body);
-        if (!images.items || images.items.length < 4) {
-          resolve('no_images');
-        } else {
-          const data = images.items.map((image: any) => {
-            return image.link;
-          });
-          resolve(data);
-        }
-      });
-    });
+    return data;
   } catch (error) {
     console.log(error);
     throw error;
@@ -92,5 +83,5 @@ const getImage = async (word: string): Promise<string | string[]> => {
 export default {
   createWords,
   getWords,
-  getImage,
+  getWordDetails,
 };

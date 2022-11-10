@@ -15,3 +15,11 @@ export interface WordResponseDto {
     },
   ];
 }
+
+export interface WordDetailResponseDto {
+  urls: [
+    {
+      url: string;
+    },
+  ];
+}
