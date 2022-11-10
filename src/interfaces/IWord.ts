@@ -23,3 +23,7 @@ export interface WordDetailResponseDto {
     },
   ];
 }
+
+export interface HintResponseDto {
+  images: [string]
+}
