@@ -9,7 +9,7 @@ const getToken = (userId: number): string => {
     }
   };
   const accessToken: string = jwt.sign(payload, config.jwtSecret, {
-    expiresIn: "2h"
+    expiresIn: "14d"
   });
 
   return accessToken;
@@ -19,7 +19,6 @@ const verifyToken = (token: string) => {
   let decoded;
   try {
     decoded = jwt.verify(token, config.jwtSecret);
-    console.log("decoded", decoded);
     return decoded;
   } catch (error: any) {
     console.log(error);
