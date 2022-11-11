@@ -70,7 +70,7 @@ const signInUser = async (
   }
 };
 
-const confirmUserId = async (client: any, userConfirmIdDto: UserConfirmIdDto): Promise<string> => {
+const confirmUserId = async (client: any, userId: string): Promise<string> => {
   try {
     const { rows: user } = await client.query(
       `
@@ -78,7 +78,7 @@ const confirmUserId = async (client: any, userConfirmIdDto: UserConfirmIdDto): P
         FROM "user" as u
         WHERE u.user_id = $1
       `,
-      [userConfirmIdDto.user_id],
+      [userId],
     );
 
     if (user[0]) {
