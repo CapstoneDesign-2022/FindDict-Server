@@ -13,6 +13,3 @@ export interface UserSignInDto {
 export interface UserSignInResponseDto {
   accessToken: string;
 }
-export interface UserConfirmIdDto {
-  user_id: string;
-}

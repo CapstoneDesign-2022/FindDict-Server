@@ -75,17 +75,11 @@ const signInUser = async (req: Request, res: Response) => {
 
 const confirmUserId = async (req: Request, res: Response) => {
   let client;
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    return res
-    .status(statusCode.BAD_REQUEST)
-    .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
-  }
 
   try {
     client = await db.connect(req);
-    const userConfirmIdDto: UserConfirmIdDto = req.body;
-    const data = await UserService.confirmUserId(client, userConfirmIdDto);
+    const userId: string = JSON.stringify(req.query.user_id).replace(/\"/gi, '');
+    const data = await UserService.confirmUserId(client, userId);
     if (data === 'available_Id') {
       res
       .status(statusCode.OK)
