@@ -8,9 +8,9 @@ const router = Router();
 router.post(
   '/new',
   imageUploader.single('image'),
-  [body('words').notEmpty()],
+  [body('english').notEmpty()],
   auth,
-  WordController.createWords,
+  WordController.createWord,
 );
 
 router.get('/list', auth, WordController.getWords);

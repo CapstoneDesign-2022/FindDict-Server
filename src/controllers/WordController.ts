@@ -9,11 +9,11 @@ import { validationResult } from 'express-validator';
 
 /**
  *  @route POST /word/
- *  @desc create words
+ *  @desc create word
  *  @access private
  **/
 
-const createWords = async (req: Request, res: Response) => {
+const createWord = async (req: Request, res: Response) => {
   let client;
   const error = validationResult(req);
   if (!error.isEmpty()) {
@@ -31,17 +31,16 @@ const createWords = async (req: Request, res: Response) => {
   try {
     client = await db.connect(req);
     const wordCreateDto: WordCreateDto = req.body;
-    wordCreateDto.words = JSON.parse(req.body.words);
     const userId = req.body.user.id;
-    const data = await WordService.createWords(client, userId, location, wordCreateDto);
+    const data = await WordService.createWord(client, userId, location, wordCreateDto);
     if (data === 'word_missing') {
       res
         .status(statusCode.BAD_REQUEST)
-        .send(util.success(statusCode.BAD_REQUEST, message.CREATE_WORD_FAIL, data));
+        .send(util.fail(statusCode.BAD_REQUEST, message.CREATE_WORD_FAIL));
     } else {
       res
         .status(statusCode.OK)
-        .send(util.success(statusCode.OK, message.CREATE_WORD_SUCCESS, data));
+        .send(util.success(statusCode.OK, message.CREATE_WORD_SUCCESS));
     }
   } catch (error) {
     console.log(error);
@@ -138,7 +137,7 @@ const getWordDetails = async (req: Request, res: Response) => {
     }
 }
 export default {
-  createWords,
+  createWord,
   getWords,
   getWordDetails,
   getImage
