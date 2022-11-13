@@ -1,10 +1,5 @@
 export interface WordCreateDto {
-  words: [
-    {
-      korean: string;
-      english: string;
-    },
-  ];
+  english: string;
 }
 
 export interface WordResponseDto {

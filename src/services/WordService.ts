@@ -7,23 +7,21 @@ import {
 const request = require('request');
 import config from '../config';
 
-const createWords = async (
+const createWord = async (
   client: any,
   userId: string,
   imageURL: string,
   wordCreateDto: WordCreateDto,
 ): Promise<string> => {
   try {
-    for (const word of wordCreateDto.words) {
-      if (!word.korean || !word.english) return 'word_missing';
-      await client.query(
+    if (!wordCreateDto.english) return 'word_missing';
+    await client.query(
         `
-          INSERT INTO "word" (user_id, korean, english, image_url, is_trap)
-          VALUES ($1, $2, $3, $4, $5)
+          INSERT INTO "word" (user_id, english, image_url, is_trap)
+          VALUES ($1, $2, $3, $4)
           `,
-        [userId, word.korean, word.english, imageURL, false],
-      );
-    }
+        [userId, wordCreateDto.english, imageURL, false],
+    );
     return 'successfully_stored';
   } catch (error) {
     console.log(error);
@@ -130,7 +128,7 @@ const getImage = async (word: string): Promise<string | HintResponseDto> => {
 };
 
 export default {
-  createWords,
+  createWord,
   getWords,
   getWordDetails,
   getImage,
