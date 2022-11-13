@@ -3,7 +3,7 @@ import util from '../modules/util';
 import { Request, Response } from 'express';
 import message from '../modules/responseMessage';
 import db from '../loaders/db';
-import { UserSignUpDto, UserSignInDto, UserConfirmIdDto } from '../interfaces/IUser';
+import { UserSignUpDto, UserSignInDto } from '../interfaces/IUser';
 import { UserService } from '../services';
 import { validationResult } from 'express-validator';
 
