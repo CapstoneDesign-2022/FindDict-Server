@@ -33,16 +33,18 @@ const getWords = async (client: any, userId: string): Promise<WordResponseDto> =
   try {
     const { rows: words } = await client.query(
       `
-        SELECT w.korean, w.english
+        SELECT w.english
         FROM "word" as w
         WHERE w.user_id = $1 and w.is_trap = $2
         ORDER BY w.created_at DESC
           `,
       [userId, false],
     );
+    
+    const english = words.map((word: {english: string}) => word.english )
 
     const data: WordResponseDto = {
-      words: words,
+      english: english,
     };
 
     return data;

@@ -3,12 +3,7 @@ export interface WordCreateDto {
 }
 
 export interface WordResponseDto {
-  words: [
-    {
-      korean: string;
-      english: string;
-    },
-  ];
+  english: [string];
 }
 
 export interface WordDetailResponseDto {

@@ -3,8 +3,7 @@ import {
   UserSignUpDto,
   UserSignUpResponseDto,
   UserSignInDto,
-  UserSignInResponseDto,
-  UserConfirmIdDto,
+  UserSignInResponseDto
 } from '../interfaces/IUser';
 import jwtHandler from '../modules/jwtHandler';
 import bcrypt from 'bcryptjs';
