@@ -8,6 +8,7 @@ const router = Router();
 router.post(
   '/new',
   imageUploader.single('image'),
+  [body('english').notEmpty()],
   auth,
   WordController.createWord,
 );
