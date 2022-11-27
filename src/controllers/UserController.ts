@@ -61,7 +61,7 @@ const signInUser = async (req: Request, res: Response) => {
         .status(statusCode.UNAUTHORIZED)
         .send(util.fail(statusCode.UNAUTHORIZED, message.SIGNIN_FAIL));
     } else {
-      res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_SUCCESS, "ci/cd 성공"));
+      res.status(statusCode.OK).send(util.success(statusCode.OK, message.SIGNIN_SUCCESS, data));
     }
   } catch (error) {
     console.log(error);
