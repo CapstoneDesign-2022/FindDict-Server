@@ -12,7 +12,7 @@ const getToken = (userId) => {
         }
     };
     const accessToken = jsonwebtoken_1.default.sign(payload, config_1.default.jwtSecret, {
-        expiresIn: "2h"
+        expiresIn: "14d"
     });
     return accessToken;
 };

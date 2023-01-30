@@ -41,8 +41,11 @@ const signInUser = (client, userSignInDto) => __awaiter(void 0, void 0, void 0, 
         FROM "user" as u
         WHERE u.user_id = $1
       `, [userSignInDto.user_id]);
+        if (!user[0]) {
+            return 'login_failed';
+        }
         const isMatch = yield bcryptjs_1.default.compare(userSignInDto.password, user[0].password);
-        if (!user[0] || !isMatch) {
+        if (!isMatch) {
             return 'login_failed';
         }
         const accessToken = jwtHandler_1.default.getToken(user[0].id);
@@ -56,13 +59,13 @@ const signInUser = (client, userSignInDto) => __awaiter(void 0, void 0, void 0, 
         throw error;
     }
 });
-const confirmUserId = (client, userConfirmIdDto) => __awaiter(void 0, void 0, void 0, function* () {
+const confirmUserId = (client, userId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { rows: user } = yield client.query(`
         SELECT *
         FROM "user" as u
         WHERE u.user_id = $1
-      `, [userConfirmIdDto.user_id]);
+      `, [userId]);
         if (user[0]) {
             return 'already_exist';
         }

@@ -9,7 +9,9 @@ const express_validator_1 = require("express-validator");
 const auth_1 = __importDefault(require("../middlewares/auth"));
 const multer_1 = __importDefault(require("../config/multer"));
 const router = (0, express_1.Router)();
-router.post("/new", multer_1.default.single("image"), [(0, express_validator_1.body)("words").notEmpty()], auth_1.default, controllers_1.WordController.createWords);
-router.get("/list", auth_1.default, controllers_1.WordController.getWords);
+router.post('/new', multer_1.default.single('image'), [(0, express_validator_1.body)('english').notEmpty()], auth_1.default, controllers_1.WordController.createWord);
+router.get('/list', auth_1.default, controllers_1.WordController.getWords);
+router.get('/detail', auth_1.default, controllers_1.WordController.getWordDetails);
+router.get("/", auth_1.default, controllers_1.WordController.getImage);
 exports.default = router;
 //# sourceMappingURL=WordRouter.js.map

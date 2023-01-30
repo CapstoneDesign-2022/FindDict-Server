@@ -48,6 +48,11 @@ const signUpUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             client.release();
     }
 });
+/**
+ *  @route POST /user/
+ *  @desc sign in user
+ *  @access public
+ **/
 const signInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let client;
     const error = (0, express_validator_1.validationResult)(req);
@@ -82,16 +87,10 @@ const signInUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const confirmUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let client;
-    const error = (0, express_validator_1.validationResult)(req);
-    if (!error.isEmpty()) {
-        return res
-            .status(statusCode_1.default.BAD_REQUEST)
-            .send(util_1.default.fail(statusCode_1.default.BAD_REQUEST, responseMessage_1.default.NULL_VALUE));
-    }
     try {
         client = yield db_1.default.connect(req);
-        const userConfirmIdDto = req.body;
-        const data = yield services_1.UserService.confirmUserId(client, userConfirmIdDto);
+        const userId = JSON.stringify(req.query.user_id).replace(/\"/gi, '');
+        const data = yield services_1.UserService.confirmUserId(client, userId);
         if (data === 'available_Id') {
             res
                 .status(statusCode_1.default.OK)

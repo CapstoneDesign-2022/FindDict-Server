@@ -24,7 +24,7 @@ const devMode = process.env.NODE_ENV === 'development';
 // 서버가 실행되면 현재 환경이 개발 모드(로컬)인지 프로덕션 모드(배포)인지 콘솔에 찍어줍시다.
 console.log(`[🔥DB] ${process.env.NODE_ENV}`);
 // 커넥션 풀을 생성해줍니다.
-const pool = new pg_1.Pool(Object.assign(Object.assign({}, index_1.default), { port: 5432, connectionTimeoutMillis: 60 * 1000, idleTimeoutMillis: 60 * 1000, ssl: { rejectUnauthorized: false } }));
+const pool = new pg_1.Pool(Object.assign(Object.assign({}, index_1.default), { port: 5432, connectionTimeoutMillis: 60 * 1000, idleTimeoutMillis: 60 * 1000 }));
 // 위에서 생성한 커넥션 풀에서 커넥션을 빌려오는 함수를 정의합니다.
 // 기본적으로 제공되는 pool.connect()와 pool.connect().release() 함수에 디버깅용 메시지를 추가하는 작업입니다.
 const connect = (req) => __awaiter(void 0, void 0, void 0, function* () {
